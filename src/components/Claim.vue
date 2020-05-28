@@ -2,9 +2,9 @@
   <div class="claimWrapper">
     <h1 class="claim">SPACER</h1>
     <p class="subclaim">
-        Lorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur nulla temporibus nam numquam quae natus. Alias tenetur molestias totam ullam. ipsum dolor sit, amet consectetur adipisicing elit. Voluptate magni fugiat odit sunt omnis quisquam ut facere quibusdam ullam aliquam.
+        Reach for the stars !
     </p>
-    <p  class="subclaim">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, porro?</p>
+    <p  class="subclaim">I mean really!  go get them tiger! Wubaladubdub!!!</p>
   </div>
 </template>
 
@@ -15,12 +15,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import url(https://cdn.rawgit.com/tonsky/FiraCode/1.205/distr/fira_code.css);
+
+
     .claimWrapper {
+  font-style: 'Fira Code', sans-serif;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         text-align: center;
         margin-bottom: 50px;
+        padding: 0 50px;
+    }
+    h1 {
+      font-size: 5rem;
+      @media (max-width:500px) {
+        font-size: 4rem;
+      }
+    }
+    p {
+      font-size: 1.2rem;
+      font-weight: 300;
     }
 </style>

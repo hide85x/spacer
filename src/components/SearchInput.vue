@@ -1,11 +1,14 @@
 <template>
-  <div class="wrapper">
-    <input v-model="search_query" 
-    id="search" 
-    name="search" 
-    placeholder="search"
-    @input="inputHandler"
-     />
+<!-- zamiast :class={dark : dark} -->
+  <div class="searchWrapper">
+    <input 
+    :value="value"
+    :class="{dark}" 
+    
+    id="search"
+     name="search" 
+     placeholder="search"
+      @input="handleChange" />
     <!-- <ul>
         <li v-for="result in results" :key="result.data[0].nasa_id">
           {{result.data[0].description}}
@@ -19,60 +22,62 @@
 </template>
 
 <script>
-import axios from "axios";
-import debounce from 'lodash.debounce' ;
-
-const url_base = "https://images-api.nasa.gov/search?q=";
-
-
 export default {
   name: "SearchInput",
-   data() {
-    return {
-      search_query: "" , // daje nam dostep to two way binding w  vmodel w input, musi miec inicjalną wartość!
-      results: []
-    };
+
+  props: {
+    value: {
+      type: String,
+      required: true
+    },
+    dark :{
+      type: Boolean,
+      default: false
+    }
   },
   methods: {
-    inputHandler: debounce(function() {
-      const imageTag = document.querySelector("#image");
-
-        axios
-          .get(`${url_base}${this.search_query}&media_type=image`)
-          .then(res => {
-            !res.data.collection.items.length ? alert('couldnt find anything....'): null;
-              
-            
-            this.results = res.data.collection.items;
-
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      }, 500 )   
-}
+    handleChange(e) {
+      this.$emit("input", e.target.value);
+    }
+  }
 };
 </script>
 
 <style lang='scss' scoped>
-  .wrapper {
-      width: 100%;
+.searchWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  input {
     display: flex;
-    flex-direction: column;
-  
-  
-    input {
-        align-self: center;
-        width: 50%;
-        margin-top: 50px;
-      height: 50px;
-      font-size: 23px;
-      border: 0;
-      border-bottom: 2px solid black;
-      text-align: center;
-      background: none;
-      color: white;
-      ;
-    }
+    align-self: center;
+    width: 50%;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    height: 40px;
+    font-size: 23px;
+    font-weight: 200;
+    border: 0;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.301);
+    text-align: center;
+    background: none;
+    color: white;
+    transition: box-shadow ease-in 0.2s;
   }
+  input:focus {
+    outline: none !important ;
+    box-shadow: 0 12px 9px -9px white;
+  }
+  .dark {
+    color: black;
+        border-bottom: 2px solid rgba(3, 3, 3, 0.644);
+
+  }
+  .dark:focus {
+        outline: none !important ;
+       box-shadow: 0 12px 9px -9px black;
+
+  }
+}
 </style>
