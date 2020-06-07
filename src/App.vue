@@ -15,8 +15,13 @@
     <Claim v-if="step===0" />
     <SearchInput v-model="search_query" @input="inputHandler" :dark="step ===1" />
     <div v-if="results && !loading && step ===1" class="results">
-      <Item v-for="item in results" :item="item" :key="item.data[0].nasa_id" />
+
+      <!-- uzwamy click.native , poniewaz nie emitujemy niz z wewnatrz komponentu . Za kazdym razem kiedy chcemy cos zrobic z komponentem a ten nic nie emituje z wew siebie uzywamy native  -->
+      <Item v-for="item in results" :item="item" :key="item.data[0].nasa_id" @click.native="handleModalOpen(item)" />
     </div>
+    <Modal v-if="modalOpen" :item="modalItem" @closeModal="modalOpen= false" />
+    <!-- :item to data wysyłane do komonentu MODAL odbieramy je inicjalizucjąc najppierw item w props i dalej mamy do niej dostep w obiekcie mounted i data -->
+    <!-- closeModal to wyemitowany z komponentu modal event -->
   </div>
 </template>
 
@@ -28,8 +33,9 @@ const url_base = "https://images-api.nasa.gov/search?q=";
 
 import HeroImg from "@/components/HeroImg.vue";
 import SearchInput from "@/components/SearchInput.vue";
-import Claim from "@/components/Claim"; //@ jest sciezka src
+import Claim from "@/components/Claim.vue"; //@ jest sciezka src
 import Item from '@/components/Item.vue'
+import Modal from '@/components/Modal.vue'
 
 export default {
   name: "App",
@@ -37,14 +43,16 @@ export default {
     Claim,
     SearchInput,
     HeroImg,
-    Item
+    Item, Modal
   },
   data() {
     return {
       loading: false,
       step: 0,
       search_query: "", // daje nam dostep to two way binding w  vmodel w input, musi miec inicjalną wartość!
-      results: []
+      results: [],
+      modalOpen: false,
+      modalItem: null
     };
   },
   methods: {
@@ -63,12 +71,19 @@ export default {
           this.loading = false;
           this.step = 1;
 
-          console.log(this.results);
         })
         .catch(err => {
           console.log(err);
         });
-    }, 500)
+    }, 600),
+
+    handleModalOpen(item) {
+      console.log(item)
+      this.modalOpen= true;
+      this.modalItem= item;
+    }
+
+
   }
 };
 </script>

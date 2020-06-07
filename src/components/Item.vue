@@ -1,5 +1,6 @@
 <template>
-  <div :style="style" class="item"></div>
+<!-- :style to tyle samo co v-bind:class -->
+  <div :style="style" class="item"></div> 
 </template>
 
 <script>
@@ -14,16 +15,23 @@ export default {
   data() {
     return {
       photo: this.item.links[0].href,
-      title: this.item.data[0].title,
       
     };
   },
   // bez tego szaju niżej nie działą, wczesniej mielismy style zwracane z funkcji data  w obiekcie i nie działo
+  // obiekt data był zwrascany zanim komponent został zamontowany, dlatego nie milismy dostepu do propsa ITEM w APP
+
+  //compured robi update za kazdym razem kiedy obiekt data ulega zmienie
     computed: {
     style() {
       return `background-image: url("${this.photo}")`;
     },
   },
+
+  //kolejny sposob
+  // mounted() {
+  //   this.photo= this.item.links[0].href,
+  // }
 };
 </script>
 
@@ -37,13 +45,13 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
   z-index: 22;
-  transition: transform 0.3s ease-in, box-shadow 0.5s ease-in;
-//   &:hover {
-//       transform: scale(1.8);
-//       z-index: 33;
-//       align-items: center;
-//       box-shadow: 0 0 30px 500px rgba(0, 0, 0, 0.863);
-//       cursor: pointer;
-// }
+  transition: transform 0.3s ease-in, box-shadow 0.3s ease-in;
+  &:hover {
+    box-shadow: 0 13px 23px black;
+    z-index: 333;
+      transform: scale(1.1);
+      cursor: pointer;
 }
+}
+
 </style>
