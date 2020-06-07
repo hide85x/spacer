@@ -38,7 +38,7 @@ export default {
 <style lang="scss" scoped>
 .item {
     color: black;
-    margin: 2px;
+    margin: 6px;
   width: 300px;
   height: 300px;
   background-position: 50%;
