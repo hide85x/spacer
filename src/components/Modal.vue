@@ -65,38 +65,28 @@ export default {
 
 .descr {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
   align-items: center;
   margin: auto;
-  width: 50%;
+  padding: 5px;
+  max-width: 70%;
 }
 .innerWrapper {
+  max-width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 30px;
-  width: 100%;
+  padding: 20px;
   color: black;
   text-align: center;
-  // @media (min-width: 1024px) {
-  //   flex-direction: row;
-  //   .photo {
-  //     min-width: 50%;
-  //     margin-right: 20px;
-  //   }
-  // }
-  @media (max-width: 1000px) {
-    justify-content: center;
-    align-items: center;
+
+  @media (max-width: 900px) {
     flex-direction: column;
-    text-align: center;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    padding: 0;
+    align-items: center;
+    justify-content: center;
     .descr {
-      font-size: 1rem;
+      padding: 5px;
+      font-size: 0.9rem;
     }
   }
   p {
@@ -105,9 +95,11 @@ export default {
 
 }
 .photo {
-  display: flex;
-  margin: auto;
-  max-width: 100%;
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
 }
 .close {
   border-radius: 100%;

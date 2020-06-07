@@ -15,10 +15,17 @@
     <Claim v-if="step===0" />
     <SearchInput v-model="search_query" @input="inputHandler" :dark="step ===1" />
     <div v-if="results && !loading && step ===1" class="results">
-
       <!-- uzwamy click.native , poniewaz nie emitujemy niz z wewnatrz komponentu . Za kazdym razem kiedy chcemy cos zrobic z komponentem a ten nic nie emituje z wew siebie uzywamy native  -->
-      <Item v-for="item in results" :item="item" :key="item.data[0].nasa_id" @click.native="handleModalOpen(item)" />
+      <Item
+        v-for="item in results"
+        :item="item"
+        :key="item.data[0].nasa_id"
+        @click.native="handleModalOpen(item)"
+      />
     </div>
+   
+   
+    <div class="lds-dual-ring" v-if="step===1 && loading"/>
     <Modal v-if="modalOpen" :item="modalItem" @closeModal="modalOpen= false" />
     <!-- :item to data wysyłane do komonentu MODAL odbieramy je inicjalizucjąc najppierw item w props i dalej mamy do niej dostep w obiekcie mounted i data -->
     <!-- closeModal to wyemitowany z komponentu modal event -->
@@ -34,8 +41,8 @@ const url_base = "https://images-api.nasa.gov/search?q=";
 import HeroImg from "@/components/HeroImg.vue";
 import SearchInput from "@/components/SearchInput.vue";
 import Claim from "@/components/Claim.vue"; //@ jest sciezka src
-import Item from '@/components/Item.vue'
-import Modal from '@/components/Modal.vue'
+import Item from "@/components/Item.vue";
+import Modal from "@/components/Modal.vue";
 
 export default {
   name: "App",
@@ -43,7 +50,8 @@ export default {
     Claim,
     SearchInput,
     HeroImg,
-    Item, Modal
+    Item,
+    Modal
   },
   data() {
     return {
@@ -70,7 +78,6 @@ export default {
           this.results = res.data.collection.items;
           this.loading = false;
           this.step = 1;
-
         })
         .catch(err => {
           console.log(err);
@@ -78,12 +85,10 @@ export default {
     }, 600),
 
     handleModalOpen(item) {
-      console.log(item)
-      this.modalOpen= true;
-      this.modalItem= item;
+      console.log(item);
+      this.modalOpen = true;
+      this.modalItem = item;
     }
-
-
   }
 };
 </script>
@@ -145,13 +150,29 @@ html,
 .slide-enter, .slide-leave-to /* .fade-leave-active below version 2.1.8 */ {
   margin-top: -50px;
 }
-// #img {
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-// }
-// #image {
-//   width: 500px;
-//   height: 500px;
-// }
+// loader
+.lds-dual-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid rgb(88, 88, 88);
+  border-color: rgb(39, 39, 39) transparent #fff transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 </style>
