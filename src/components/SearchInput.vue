@@ -1,23 +1,13 @@
 <template>
-<!-- zamiast :class={dark : dark} -->
+  <!-- zamiast :class={dark : dark} -->
   <div class="searchWrapper">
-    <input 
-    :value="value"
-    :class="{dark}" 
-    
-    id="search"
-     name="search" 
-     placeholder="search"
-      @input="handleChange" />
-    <!-- <ul>
-        <li v-for="result in results" :key="result.data[0].nasa_id">
-          {{result.data[0].description}}
-        </li>
-    </ul>-->
-    <!-- <div id="img">
-        <h1>image</h1>
-        <img id="image" alt />
-    </div>-->
+    <input
+      :class="{dark}"
+      id="search"
+      name="search"
+      placeholder="space stuff search..."
+      @input="handleChange"
+    />
   </div>
 </template>
 
@@ -26,20 +16,16 @@ export default {
   name: "SearchInput",
 
   props: {
-    value: {
-      type: String,
-      required: true
-    },
-    dark :{
+    dark: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   methods: {
     handleChange(e) {
       this.$emit("input", e.target.value);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -71,13 +57,11 @@ export default {
   }
   .dark {
     color: black;
-        border-bottom: 2px solid rgba(3, 3, 3, 0.644);
-
+    border-bottom: 2px solid rgba(3, 3, 3, 0.644);
   }
   .dark:focus {
-        outline: none !important ;
-       box-shadow: 0 12px 9px -9px black;
-
+    outline: none !important ;
+    box-shadow: 0 12px 9px -9px black;
   }
 }
 </style>

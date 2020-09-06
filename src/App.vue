@@ -26,7 +26,9 @@
    
    
     <div class="lds-dual-ring" v-if="step===1 && loading"/>
-    <Modal v-if="modalOpen" :item="modalItem" @closeModal="modalOpen= false" />
+    <Modal v-if="modalOpen" :item="modalItem" @X="modalOpen= false" />
+
+    <!-- wczesniej w Modal mielismy @(wyemitowany z comp event) -->
     <!-- :item to data wysyłane do komonentu MODAL odbieramy je inicjalizucjąc najppierw item w props i dalej mamy do niej dostep w obiekcie mounted i data -->
     <!-- closeModal to wyemitowany z komponentu modal event -->
   </div>
@@ -36,7 +38,6 @@
 import axios from "axios";
 import debounce from "lodash.debounce";
 
-const url_base = "https://images-api.nasa.gov/search?q=";
 
 import HeroImg from "@/components/HeroImg.vue";
 import SearchInput from "@/components/SearchInput.vue";
@@ -44,6 +45,7 @@ import Claim from "@/components/Claim.vue"; //@ jest sciezka src
 import Item from "@/components/Item.vue";
 import Modal from "@/components/Modal.vue";
 
+const url_base = "https://images-api.nasa.gov/search?q=";
 export default {
   name: "App",
   components: {
@@ -64,6 +66,7 @@ export default {
     };
   },
   methods: {
+    
     inputHandler: debounce(function() {
       const imageTag = document.querySelector("#image");
       this.loading = true;

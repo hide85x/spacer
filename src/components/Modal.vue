@@ -1,15 +1,17 @@
-<template>
+<template functional>
   <div class="outerWrapper">
     <div class="innerWrapper">
       <div class="photo">
-        <img :src="photo" alt />
+        <img :src="props.item.links[0].href" alt />
       </div>
       <div class="descr">
-        <h2 class="title">{{title}}</h2>
-        <p class="description">{{descr}}</p>
+        <h2 class="title">{{props.item.data[0].title}}</h2>
+        <p class="description">{{props.item.data[0].description}}</p>
       </div>
     </div>
-    <div class="close" @click="$emit('closeModal')" />
+    <div class="close" @click="listeners['X']('closeModal')" />  
+                 <!--wczesniej było -> @click="$emit('closeModal')" /
+            jeśli chcemy zeby emitowal event z functional comp to musmiy wysłac event e taki sposob-->
   </div>
 </template>
 
@@ -22,18 +24,18 @@ export default {
       required: true
     }
   },
-  data() {
-    return {
-      photo: null,
-      title: null,
-      descr: null
-    };
-  },
-  mounted() {
-      this.photo = this.item.links[0].href,
-      this.title = this.item.data[0].title,
-      this.descr = this.item.data[0].description.substring(0, 100);
-  }
+  // data() {
+  //   return {
+  //     photo: null,
+  //     title: null,
+  //     descr: null
+  //   };
+  // },
+  // mounted() {
+  //     this.photo = this.item.links[0].href,
+  //     this.title = this.item.data[0].title,
+  //     this.descr = this.item.data[0].description.substring(0, 100);
+  // }
 };
 </script>
 
@@ -64,13 +66,10 @@ export default {
 }
 
 .descr {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  align-items: center;
   margin: auto;
-  padding: 5px;
-  max-width: 70%;
+  padding: 15px;
+  width: 50%;
+  flex: 1;
 }
 .innerWrapper {
   max-width: 100%;
@@ -95,6 +94,10 @@ export default {
 
 }
 .photo {
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  flex:1;
   img {
     max-width: 100%;
     height: auto;
